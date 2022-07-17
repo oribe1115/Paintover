@@ -2,4 +2,4 @@
 <work.oribe.paintover.UnderlayLayerView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"></work.oribe.paintover.UnderlayLayerView>
+    android:background="#11FFFFFF"></work.oribe.paintover.UnderlayLayerView>

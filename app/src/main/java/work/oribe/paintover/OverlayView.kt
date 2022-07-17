@@ -20,33 +20,22 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
 
     private lateinit var button: Button
 
-    private val layoutParams = WindowManager.LayoutParams(
-        WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY, // Overlayレイヤに表示
-        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE  // フォーカスを奪わない
-                or WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
-                or WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
-                or WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, // 画面外への拡張を許可
-        PixelFormat.TRANSLUCENT // 半透明
-    )
+    private val underlayParams = createUnderlayParams()
+    private val buttonParams = createButtonParams()
 
-    private val buttonParams = WindowManager.LayoutParams(
-        WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-        WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
-        PixelFormat.TRANSLUCENT
-    )
+    private var isShowingUnderlay = false
 
     fun show() {
         Log.d(TAG, "show")
         underlayLayerView = UnderlayLayerView.create(context)
+        
         button = Button(context)
         button.text = "Button"
         button.setBackgroundColor(Color.BLUE)
 
-        buttonParams.gravity = Gravity.LEFT
-        buttonParams.width = 100
 
         button.setOnClickListener {
-            windowManager.addView(underlayLayerView, layoutParams)
+            toggle()
         }
 
         windowManager.addView(button, buttonParams)
@@ -56,6 +45,42 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
         Log.d(TAG, "clear")
 
         windowManager.removeView(this)
+    }
+
+    private fun toggle() {
+        if (isShowingUnderlay) {
+            windowManager.removeView(underlayLayerView)
+        } else {
+            windowManager.removeView(button)
+
+            windowManager.addView(underlayLayerView, underlayParams)
+            windowManager.addView(button, buttonParams)
+        }
+
+        isShowingUnderlay = !isShowingUnderlay
+    }
+
+    private fun createUnderlayParams(): WindowManager.LayoutParams {
+        return WindowManager.LayoutParams(
+            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY, // Overlayレイヤに表示
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, // 画面外への拡張を許可
+            PixelFormat.TRANSLUCENT // 半透明
+        )
+    }
+
+    private fun createButtonParams(): WindowManager.LayoutParams {
+        val params = WindowManager.LayoutParams(
+            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                    or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+            PixelFormat.TRANSLUCENT
+        )
+
+        params.width = 200
+        params.height = 100
+        params.gravity = Gravity.CENTER_VERTICAL or Gravity.LEFT
+
+        return params
     }
 
     companion object {
