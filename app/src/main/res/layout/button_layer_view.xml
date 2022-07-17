@@ -4,6 +4,7 @@
     android:layout_height="fill_parent">
 
     <Button
+        android:id="@+id/button_layer_view_button"
         android:layout_width="192dp"
         android:layout_height="222dp"
         android:background="#0000FF"
