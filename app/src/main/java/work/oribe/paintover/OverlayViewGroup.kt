@@ -7,12 +7,13 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.core.view.isVisible
 
 class OverlayViewGroup(context: Context, attrs: AttributeSet?) : ViewGroup(context, attrs) {
     private val windowManager: WindowManager =
         context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
-    //    private lateinit var buttonLayerView: ButtonLayerView
+    private val buttonLayerView = ButtonLayerView.create(context)
     private val controlButton = ControlButton(context, null)
 //    private lateinit var underlayLayerView: UnderlayLayerView
 
@@ -40,8 +41,11 @@ class OverlayViewGroup(context: Context, attrs: AttributeSet?) : ViewGroup(conte
     fun show() {
         Log.d(TAG, "show")
 
-        controlButton.text = "ControlButton"
-        addView(controlButton)
+//        controlButton.text = "ControlButton"
+//        addView(controlButton)
+
+        addView(buttonLayerView)
+        buttonLayerView.isVisible = true
 
         windowManager.addView(this, layoutParams)
     }

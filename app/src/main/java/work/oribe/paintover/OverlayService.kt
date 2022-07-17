@@ -9,6 +9,8 @@ class OverlayService : Service() {
     private lateinit var overlayView: OverlayView
     private lateinit var overlayViewGroup: OverlayViewGroup
 
+    private lateinit var buttonLayerView: ButtonLayerView
+
     override fun onBind(p0: Intent?): IBinder? {
         TODO("Not yet implemented")
     }
@@ -17,18 +19,23 @@ class OverlayService : Service() {
         Log.d(TAG, "onCreate")
 
         super.onCreate()
-//        overlayView = OverlayView.create(this)
-//        overlayView.show()
-        overlayViewGroup = OverlayViewGroup.create(this)
-        overlayViewGroup.show()
+        overlayView = OverlayView.create(this)
+        buttonLayerView = ButtonLayerView.create(this)
+
+        overlayView.show()
+
+        overlayView.addView(buttonLayerView)
+
+//        overlayViewGroup = OverlayViewGroup.create(this)
+//        overlayViewGroup.show()
     }
 
     override fun onDestroy() {
         Log.d(TAG, "onDestroy")
 
         super.onDestroy()
-//        overlayView.clear()
-        overlayViewGroup.clear()
+        overlayView.clear()
+//        overlayViewGroup.clear()
     }
 
     companion object {
