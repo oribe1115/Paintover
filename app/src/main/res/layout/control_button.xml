@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<work.oribe.paintover.ControlButton xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="ControlButton"
+    android:background="#0000FF"
+    android:layout_margin="300px">
+
+</work.oribe.paintover.ControlButton>

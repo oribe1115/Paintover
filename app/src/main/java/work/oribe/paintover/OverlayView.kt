@@ -4,8 +4,10 @@ import android.content.Context
 import android.graphics.PixelFormat
 import android.util.AttributeSet
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
+import android.widget.Button
 import android.widget.FrameLayout
 
 class OverlayView(ctx: Context, attrs: AttributeSet) :
@@ -15,6 +17,8 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
 
     private lateinit var buttonLayerView: ButtonLayerView
     private lateinit var underlayLayerView: UnderlayLayerView
+
+    private lateinit var button: Button
 
     private val layoutParams = WindowManager.LayoutParams(
         WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY, // Overlayレイヤに表示
@@ -27,7 +31,7 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
 
     private val buttonParams = WindowManager.LayoutParams(
         WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, // 画面外への拡張を許可
+        WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
         PixelFormat.TRANSLUCENT
     )
 
@@ -36,12 +40,30 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
 
         buttonLayerView = ButtonLayerView.create(context)
         underlayLayerView = UnderlayLayerView.create(context)
+        button = ControlButton.create(context)
+//        button = Button(context)
+//        button.text = "Button"
+//        button.maxWidth = 200
+//        button.maxHeight = 1
+//        button.width = 100
+//        button.height = 100
+//        button.setBackgroundColor(Color.BLUE)
+//        button.layoutParams = ViewGroup.LayoutParams.WRAP_CONTENT
 
-        addView(underlayLayerView)
+
 //        addView(buttonLayerView)
+//        addView(button)
 
-        windowManager.addView(this, layoutParams)
-        windowManager.addView(buttonLayerView, buttonParams)
+        buttonParams.gravity = Gravity.LEFT
+        buttonParams.width = 100
+
+        button.setOnClickListener {
+            windowManager.addView(underlayLayerView, layoutParams)
+        }
+
+//        windowManager.addView(this, layoutParams)
+        windowManager.addView(button, buttonParams)
+//        windowManager.addView(buttonLayerView, buttonParams)
     }
 
     fun clear() {
