@@ -3,12 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <work.oribe.paintover.ButtonLayerView
+    <Button
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <work.oribe.paintover.UnderlayLayerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:text="controlButton" />
 
 </work.oribe.paintover.OverlayViewGroup>

@@ -10,8 +10,8 @@ class ButtonLayerView(context: Context, attrs: AttributeSet) : View(context, att
     companion object {
         private val TAG = ButtonLayerView::class.simpleName
 
-        fun create(context: Context): ButtonLayerView {
-            return inflate(context, R.layout.button_layer_view, null) as ButtonLayerView
-        }
+//        fun create(context: Context): ButtonLayerView {
+//            return inflate(context, R.layout.button_layer_view, null) as ButtonLayerView
+//        }
     }
 }

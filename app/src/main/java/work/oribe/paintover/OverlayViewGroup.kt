@@ -12,15 +12,20 @@ class OverlayViewGroup(context: Context, attrs: AttributeSet?) : ViewGroup(conte
     private val windowManager: WindowManager =
         context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
-    private lateinit var buttonLayerView: ButtonLayerView
-    private lateinit var underlayLayerView: UnderlayLayerView
+    //    private lateinit var buttonLayerView: ButtonLayerView
+    private val controlButton = ControlButton(context, null)
+//    private lateinit var underlayLayerView: UnderlayLayerView
 
     override fun onLayout(p0: Boolean, p1: Int, p2: Int, p3: Int, p4: Int) {
-        buttonLayerView = ButtonLayerView.create(context)
-        underlayLayerView = UnderlayLayerView.create(context)
+//        buttonLayerView = ButtonLayerView.create(context)
+//        underlayLayerView = UnderlayLayerView.create(context)
 
-        addView(underlayLayerView)
-        addView(buttonLayerView)
+//        addView(underlayLayerView)
+//        addView(buttonLayerView)
+
+        Log.d(TAG, "onLayout")
+        controlButton.text = "ControlButton"
+        addView(controlButton)
     }
 
     private val layoutParams = WindowManager.LayoutParams(
@@ -34,6 +39,9 @@ class OverlayViewGroup(context: Context, attrs: AttributeSet?) : ViewGroup(conte
 
     fun show() {
         Log.d(TAG, "show")
+
+        controlButton.text = "ControlButton"
+        addView(controlButton)
 
         windowManager.addView(this, layoutParams)
     }
