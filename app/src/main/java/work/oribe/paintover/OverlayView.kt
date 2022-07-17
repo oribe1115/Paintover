@@ -28,6 +28,12 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
         windowManager.addView(this, layoutParams)
     }
 
+    fun clear() {
+        Log.d(TAG, "clear")
+
+        windowManager.removeView(this)
+    }
+
     companion object {
         private val TAG = OverlayView::class.simpleName
 

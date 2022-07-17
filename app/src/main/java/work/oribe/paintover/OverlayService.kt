@@ -20,6 +20,13 @@ class OverlayService : Service() {
         overlayView.show()
     }
 
+    override fun onDestroy() {
+        Log.d(TAG, "onDestroy")
+
+        super.onDestroy()
+        overlayView.clear()
+    }
+
     companion object {
         private val TAG = OverlayService::class.simpleName
     }
