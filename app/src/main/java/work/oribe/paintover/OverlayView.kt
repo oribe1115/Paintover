@@ -1,6 +1,7 @@
 package work.oribe.paintover
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.PixelFormat
 import android.util.AttributeSet
 import android.util.Log
@@ -15,7 +16,6 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
     private val windowManager: WindowManager =
         ctx.getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
-    private lateinit var buttonLayerView: ButtonLayerView
     private lateinit var underlayLayerView: UnderlayLayerView
 
     private lateinit var button: Button
@@ -37,22 +37,10 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
 
     fun show() {
         Log.d(TAG, "show")
-
-        buttonLayerView = ButtonLayerView.create(context)
         underlayLayerView = UnderlayLayerView.create(context)
-        button = ControlButton.create(context)
-//        button = Button(context)
-//        button.text = "Button"
-//        button.maxWidth = 200
-//        button.maxHeight = 1
-//        button.width = 100
-//        button.height = 100
-//        button.setBackgroundColor(Color.BLUE)
-//        button.layoutParams = ViewGroup.LayoutParams.WRAP_CONTENT
-
-
-//        addView(buttonLayerView)
-//        addView(button)
+        button = Button(context)
+        button.text = "Button"
+        button.setBackgroundColor(Color.BLUE)
 
         buttonParams.gravity = Gravity.LEFT
         buttonParams.width = 100
@@ -61,9 +49,7 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
             windowManager.addView(underlayLayerView, layoutParams)
         }
 
-//        windowManager.addView(this, layoutParams)
         windowManager.addView(button, buttonParams)
-//        windowManager.addView(buttonLayerView, buttonParams)
     }
 
     fun clear() {
