@@ -41,7 +41,7 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
             )
 
         button = Button(context)
-        button.setBackgroundResource(R.drawable.round_shape_button)
+        button.setBackgroundResource(R.drawable.undrawable)
 
         button.setOnClickListener { toggle() }
         button.setOnLongClickListener {
@@ -68,7 +68,7 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
             windowManager.removeView(drawLayerView)
             windowManager.removeView(underlayLayerView)
 
-            button.setBackgroundResource(R.drawable.round_shape_button)
+            button.setBackgroundResource(R.drawable.undrawable)
 
             windowManager.addView(drawLayerView, undrawableParams)
             windowManager.addView(button, buttonParams)
@@ -76,7 +76,7 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
             windowManager.removeView(button)
             windowManager.removeView(drawLayerView)
 
-            button.setBackgroundResource(R.drawable.darker_round_shape_button)
+            button.setBackgroundResource(R.drawable.drawable_button)
 
             windowManager.addView(underlayLayerView, underlayParams)
             windowManager.addView(drawLayerView, drawableParams)
