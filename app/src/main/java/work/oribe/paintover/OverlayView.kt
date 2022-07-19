@@ -1,7 +1,6 @@
 package work.oribe.paintover
 
 import android.content.Context
-import android.graphics.Color
 import android.graphics.PixelFormat
 import android.util.AttributeSet
 import android.util.Log
@@ -42,8 +41,7 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
             )
 
         button = Button(context)
-        button.text = "Button"
-        button.setBackgroundColor(Color.BLUE)
+        button.setBackgroundResource(R.drawable.round_shape_button)
 
         button.setOnClickListener { toggle() }
         button.setOnLongClickListener {
@@ -70,11 +68,15 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
             windowManager.removeView(drawLayerView)
             windowManager.removeView(underlayLayerView)
 
+            button.setBackgroundResource(R.drawable.round_shape_button)
+
             windowManager.addView(drawLayerView, undrawableParams)
             windowManager.addView(button, buttonParams)
         } else {
             windowManager.removeView(button)
             windowManager.removeView(drawLayerView)
+
+            button.setBackgroundResource(R.drawable.darker_round_shape_button)
 
             windowManager.addView(underlayLayerView, underlayParams)
             windowManager.addView(drawLayerView, drawableParams)
@@ -102,7 +104,7 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
         )
 
         params.width = 200
-        params.height = 100
+        params.height = 200
         params.gravity = Gravity.CENTER_VERTICAL or Gravity.LEFT
 
         return params
