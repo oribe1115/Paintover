@@ -26,7 +26,7 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
     private val drawableParams = createDrawableParams()
     private val undrawableParams = createUndrawableParams()
 
-    private var isShowingUnderlay = false
+    private var isDrawingMode = false
 
     fun show() {
         Log.d(TAG, "show")
@@ -58,11 +58,15 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
     fun clear() {
         Log.d(TAG, "clear")
 
-        windowManager.removeView(this)
+        windowManager.removeView(button)
+        windowManager.removeView(drawLayerView)
+        if (isDrawingMode) {
+            windowManager.removeView(underlayLayerView)
+        }
     }
 
     private fun toggle() {
-        if (isShowingUnderlay) {
+        if (isDrawingMode) {
             drawLayerView.isDrawable = false
             windowManager.removeView(button)
             windowManager.removeView(drawLayerView)
@@ -84,7 +88,7 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
             drawLayerView.isDrawable = true
         }
 
-        isShowingUnderlay = !isShowingUnderlay
+        isDrawingMode = !isDrawingMode
     }
 
     private fun createUnderlayParams(): WindowManager.LayoutParams {

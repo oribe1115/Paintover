@@ -5,11 +5,14 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
+import android.widget.Button
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var button: Button
+    private var isPaintoverMode = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(TAG, "onCreate")
@@ -17,11 +20,25 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        button = findViewById(R.id.start_end_button)
+
+        button.setOnClickListener {
+            if (!isPaintoverMode) {
+                val intent = Intent(this@MainActivity, OverlayService::class.java)
+                startService(intent)
+                isPaintoverMode = true
+                button.text = "End"
+            } else {
+                val intent = Intent(this@MainActivity, OverlayService::class.java)
+                stopService(intent)
+                isPaintoverMode = false
+                button.text = "Start"
+            }
+        }
+
         requestOverlayPermission()
         Log.d(TAG, "after requestOverlayPermission")
 
-        val intent = Intent(this@MainActivity, OverlayService::class.java)
-        startService(intent)
     }
 
     // overlayをするための許可をリクエストする
