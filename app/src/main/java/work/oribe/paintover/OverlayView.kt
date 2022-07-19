@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
-import android.widget.Button
 import android.widget.FrameLayout
 
 class OverlayView(ctx: Context, attrs: AttributeSet) :
@@ -19,7 +18,7 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
     private lateinit var underlayLayerView: UnderlayLayerView
     private lateinit var drawLayerView: DrawLayerView
 
-    private lateinit var button: Button
+    private lateinit var button: ControlButton
 
     private val underlayParams = createUnderlayParams()
     private val buttonParams = createButtonParams()
@@ -43,20 +42,13 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
                 windowMetrics.bounds.height()
             )
 
-        button = Button(context)
+        button = ControlButton(context)
         button.text = "Button"
         button.setBackgroundColor(Color.BLUE)
 
-
-        button.setOnClickListener {
-            val clickTime = System.currentTimeMillis()
-            if (clickTime - lastClickTime < DOUBLE_CLICK_TIME_DELTA) {
-                drawLayerView.clear()
-            } else {
-                toggle()
-            }
-            lastClickTime = clickTime
-        }
+        button.initialize()
+        button.setSingleTapFunc { toggle() }
+        button.setDoubleTapFunc { drawLayerView.clear() }
 
 
 
