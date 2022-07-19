@@ -29,8 +29,6 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
 
     private var isShowingUnderlay = false
 
-    private var lastClickTime: Long = 0
-
     fun show() {
         Log.d(TAG, "show")
         underlayLayerView = UnderlayLayerView.create(context)
@@ -43,7 +41,7 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
                 windowMetrics.bounds.height()
             )
 
-        button = ControlButton(context)
+        button = Button(context)
         button.text = "Button"
         button.setBackgroundColor(Color.BLUE)
 
@@ -131,7 +129,6 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
 
     companion object {
         private val TAG = OverlayView::class.simpleName
-        private const val DOUBLE_CLICK_TIME_DELTA: Long = 300
 
         fun create(context: Context): OverlayView {
             return View.inflate(context, R.layout.overlay_view, null) as OverlayView
