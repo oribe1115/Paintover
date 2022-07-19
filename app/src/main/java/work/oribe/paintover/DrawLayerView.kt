@@ -69,6 +69,10 @@ class DrawLayerView(context: Context, attrs: AttributeSet) : View(context, attrs
         return true
     }
 
+    fun clear() {
+        mBitmap.eraseColor(Color.TRANSPARENT)
+    }
+
     private fun createPaint(): Paint {
         val paint = Paint()
         paint.isAntiAlias = true

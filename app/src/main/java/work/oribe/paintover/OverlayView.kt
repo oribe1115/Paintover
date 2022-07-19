@@ -29,6 +29,8 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
 
     private var isShowingUnderlay = false
 
+    private var lastClickTime: Long = 0
+
     fun show() {
         Log.d(TAG, "show")
         underlayLayerView = UnderlayLayerView.create(context)
@@ -47,8 +49,15 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
 
 
         button.setOnClickListener {
-            toggle()
+            val clickTime = System.currentTimeMillis()
+            if (clickTime - lastClickTime < DOUBLE_CLICK_TIME_DELTA) {
+                drawLayerView.clear()
+            } else {
+                toggle()
+            }
+            lastClickTime = clickTime
         }
+
 
 
         windowManager.addView(drawLayerView, undrawableParams)
@@ -127,6 +136,7 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
 
     companion object {
         private val TAG = OverlayView::class.simpleName
+        private const val DOUBLE_CLICK_TIME_DELTA: Long = 300
 
         fun create(context: Context): OverlayView {
             return View.inflate(context, R.layout.overlay_view, null) as OverlayView
