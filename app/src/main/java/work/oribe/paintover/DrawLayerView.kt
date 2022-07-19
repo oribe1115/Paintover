@@ -77,11 +77,12 @@ class DrawLayerView(context: Context, attrs: AttributeSet) : View(context, attrs
         val paint = Paint()
         paint.isAntiAlias = true
         paint.isDither = true
-        paint.color = Color.GREEN
+        paint.color = Color.parseColor("#364ABB")
         paint.style = Paint.Style.STROKE
         paint.strokeJoin = Paint.Join.ROUND
         paint.strokeCap = Paint.Cap.ROUND
         paint.alpha = 0xff
+        paint.strokeWidth = 10f
 
         return paint
     }
