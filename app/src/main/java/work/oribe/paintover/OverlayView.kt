@@ -32,7 +32,14 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
     fun show() {
         Log.d(TAG, "show")
         underlayLayerView = UnderlayLayerView.create(context)
-        drawLayerView = DrawLayerView.create(context)
+
+        val windowMetrics = windowManager.currentWindowMetrics
+        drawLayerView =
+            DrawLayerView.create(
+                context,
+                windowMetrics.bounds.width(),
+                windowMetrics.bounds.height()
+            )
 
         button = Button(context)
         button.text = "Button"
@@ -56,6 +63,7 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
 
     private fun toggle() {
         if (isShowingUnderlay) {
+            drawLayerView.isDrawable = false
             windowManager.removeView(button)
             windowManager.removeView(drawLayerView)
             windowManager.removeView(underlayLayerView)
@@ -69,6 +77,7 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
             windowManager.addView(underlayLayerView, underlayParams)
             windowManager.addView(drawLayerView, drawableParams)
             windowManager.addView(button, buttonParams)
+            drawLayerView.isDrawable = true
         }
 
         isShowingUnderlay = !isShowingUnderlay
