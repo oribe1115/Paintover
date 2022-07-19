@@ -7,7 +7,7 @@ import android.view.MotionEvent
 import android.view.View
 import kotlin.math.abs
 
-class DrawLayerView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
+class DrawLayerView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val mPaint = createPaint()
     private val mBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
     private val mCanvas = Canvas(mBitmap)
@@ -143,5 +143,9 @@ class DrawLayerView(context: Context?, attrs: AttributeSet?) : View(context, att
     companion object {
         private const val TOUCH_TOLERANCE = 4f
         private const val MAX_POINTERS = 10
+
+        fun create(context: Context): DrawLayerView {
+            return inflate(context, R.layout.draw_layer_view, null) as DrawLayerView
+        }
     }
 }

@@ -17,18 +17,23 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
         ctx.getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
     private lateinit var underlayLayerView: UnderlayLayerView
+    private lateinit var drawLayerView: DrawLayerView
 
     private lateinit var button: Button
 
     private val underlayParams = createUnderlayParams()
     private val buttonParams = createButtonParams()
 
+    private val drawableParams = createDrawableParams()
+    private val undrawableParams = createUndrawableParams()
+
     private var isShowingUnderlay = false
 
     fun show() {
         Log.d(TAG, "show")
         underlayLayerView = UnderlayLayerView.create(context)
-        
+        drawLayerView = DrawLayerView.create(context)
+
         button = Button(context)
         button.text = "Button"
         button.setBackgroundColor(Color.BLUE)
@@ -38,6 +43,8 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
             toggle()
         }
 
+
+        windowManager.addView(drawLayerView, undrawableParams)
         windowManager.addView(button, buttonParams)
     }
 
@@ -49,11 +56,18 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
 
     private fun toggle() {
         if (isShowingUnderlay) {
+            windowManager.removeView(button)
+            windowManager.removeView(drawLayerView)
             windowManager.removeView(underlayLayerView)
+
+            windowManager.addView(drawLayerView, undrawableParams)
+            windowManager.addView(button, buttonParams)
         } else {
             windowManager.removeView(button)
+            windowManager.removeView(drawLayerView)
 
             windowManager.addView(underlayLayerView, underlayParams)
+            windowManager.addView(drawLayerView, drawableParams)
             windowManager.addView(button, buttonParams)
         }
 
@@ -81,6 +95,23 @@ class OverlayView(ctx: Context, attrs: AttributeSet) :
         params.gravity = Gravity.CENTER_VERTICAL or Gravity.LEFT
 
         return params
+    }
+
+    private fun createDrawableParams(): WindowManager.LayoutParams {
+        return WindowManager.LayoutParams(
+            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY, // Overlayレイヤに表示
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, // 画面外への拡張を許可
+            PixelFormat.TRANSLUCENT // 半透明
+        )
+    }
+
+    private fun createUndrawableParams(): WindowManager.LayoutParams {
+        return WindowManager.LayoutParams(
+            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                    or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+            PixelFormat.TRANSLUCENT
+        )
     }
 
     companion object {
