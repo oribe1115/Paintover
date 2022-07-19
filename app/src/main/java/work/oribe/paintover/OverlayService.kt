@@ -26,7 +26,7 @@ class OverlayService : Service() {
         Log.d(TAG, "onDestroy")
 
         super.onDestroy()
-//        overlayView.clear()
+        overlayView.clear()
     }
 
 
